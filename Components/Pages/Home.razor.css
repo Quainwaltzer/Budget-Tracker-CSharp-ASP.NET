@@ -1,0 +1,85 @@
+﻿.inputs{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    font-family: "Montserrat", sans-serif;
+}
+
+.title-top{
+    width: 100%;
+    padding: 0 7.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Outfit", sans-serif;
+    color: #fffff0;
+    margin-bottom: 100px;
+}
+
+.title-top h5 {
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1rem, 1.3vw, 2rem);
+}
+
+.title-top h1 {
+    font-weight: 700;
+    font-size: clamp(3rem, 2.5vw, 3.5rem);
+    background: linear-gradient(to right, #ff3e00, #930000);
+    background-size: 400px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.title-top h3 {
+    font-weight: 300;
+    font-size: clamp(1.2rem, 1.7vw, 2.2rem);
+}
+
+.data-container{
+    width: 100%;
+}
+
+table{
+    color: white;
+    border: 1px solid white;
+    width: 100%;
+}
+
+td{
+    text-align: center;
+}
+
+.sidebar{
+    width: 15%;
+    background: lightgrey;
+    height: 100vh;
+    position: fixed;
+    transition: width 0.5s ease;
+}
+
+.sidebar.collapsed{
+    width: 5%;
+}
+
+nav ul li{
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    opacity: 0;
+}
+
+
+
+.main-container {
+    margin-left: 15%;
+    width: 85%;
+    transition: width 0.5s ease, margin-left 0.5s ease;
+}
+
+.main-container.collapsed{
+    margin-left: 5%;
+    width: 95%;
+}

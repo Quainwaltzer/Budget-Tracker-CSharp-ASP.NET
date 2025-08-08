@@ -1,42 +1,71 @@
-﻿@page "/"
-@using Microsoft.EntityFrameworkCore
+﻿@page "/Home"
+
 
 <PageTitle>Home</PageTitle>
+<nav class="sidebar @(isCollapsed ? "collapsed" : "")">
+    <button @onclick="toggleSidebar">Toggle Sidebar</button>
 
-<div>
-    <label for="itemInput">Item</label>
-    <input type="text" @bind-value="ItemVar" name="itemInput" >
-    <label for="categoryInput">Category</label>
-    <input type="text" @bind-value="CategoryVar" name="categoryInput">
-    <label for="countInput">Count</label>
-    <input type="number" @bind-value="CountVar" name="countInput" step="1">
-    <label for="priceInput">Price</label>
-    <input type="number" @bind-value="PriceVar" name="priceInput" step="1" >
-    <button @onclick="Delete">Delete</button>
-    <button @onclick="Send">Send</button>
-<table>
-    <tr>
-        <th>Item Name</th>
-        <th>Category</th>
-        <th>Count</th>
-        <th>Price</th>
-        <th>Action</th>
-    </tr>
-    @foreach (var inputs in outputs)
-    {
-        <tr>
-            
-            <td><p>@inputs.ItemName</p></td>
-            <td><p>@inputs.Category</p></td>
-            <td><p>@inputs.Count</p></td>
-            <td><p>@inputs.Price</p></td>
-            <td><button @onclick="() => DeleteCertain(inputs.Id)">@inputs.ItemName Delete</button></td>
-            
-        </tr>
-     }
-</table>
-    
-</div>
+    <ul>
+        <li> Add</li>
+        <li>See</li>
+        <li>Contact</li>
+    </ul>
+</nav>
+
+<main class="main-container @(isCollapsed ? "collapsed" : "")">
+
+    <header class="title-top">
+        <h3>Welcome to</h3>
+        <h1>MoneyMaster</h1>
+        <h5>Where budgeting meets simplicity, all at your hands.</h5>
+    </header>
+
+    <section class="inputs-container">
+        <div class="inputs">
+            <label for="itemInput">Item</label>
+            <input type="text" @bind-value="ItemVar" name="itemInput">
+
+            <label for="categoryInput">Category</label>
+            <input type="text" @bind-value="CategoryVar" name="categoryInput">
+
+            <label for="countInput">Count</label>
+            <input type="number" @bind-value="CountVar" name="countInput" step="1">
+
+            <label for="priceInput">Price</label>
+            <input type="number" @bind-value="PriceVar" name="priceInput" step="1">
+        </div>
+
+        <button @onclick="Delete">Delete</button>
+        <button @onclick="Send">Send</button>
+    </section>
+
+    <section class="data-container">
+        <table>
+            <tr>
+                <th>Item Name</th>
+                <th>Category</th>
+                <th>Count</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var inputs in outputs)
+            {
+                <tr>
+
+                    <td><p>@inputs.ItemName</p></td>
+                    <td><p>@inputs.Category</p></td>
+                    <td><p>@inputs.Count</p></td>
+                    <td><p>@inputs.Price</p></td>
+                    <td><button @onclick="() => DeleteCertain(inputs.Id)">@inputs.ItemName Delete</button></td>
+
+                </tr>
+            }
+        </table>
+    </section>
+
+</main>
+
+
 
 @code{
     protected string ItemVar = string.Empty;
@@ -44,7 +73,9 @@
     protected int GoalVar = 0;
     protected int CountVar = 0;
     protected int PriceVar = 0;
+    protected bool isCollapsed = false;
 
+    [Inject] public IJSRuntime js { get; set; }
     [Inject] public BudgetContext _context { get; set; }
     protected List<BudgetDatabase> outputs { get; set; } = new List<BudgetDatabase>();
 
@@ -52,11 +83,18 @@
     {
         if (firstRender)
         {
+            await js.InvokeVoidAsync("myAnimations.runAll");
             outputs = await _context.Budgets.ToListAsync();
             StateHasChanged();
         }
 
     }
+
+    protected async Task toggleSidebar()
+    {
+        isCollapsed = !isCollapsed;
+    }
+
     public async Task HandleKeyEvent(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")

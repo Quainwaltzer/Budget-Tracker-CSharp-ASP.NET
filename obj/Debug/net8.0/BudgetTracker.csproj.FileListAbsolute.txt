@@ -167,3 +167,6 @@ C:\Users\Rovieeee\source\repos\BudgetTracker\obj\Debug\net8.0\refint\BudgetTrack
 C:\Users\Rovieeee\source\repos\BudgetTracker\obj\Debug\net8.0\BudgetTracker.pdb
 C:\Users\Rovieeee\source\repos\BudgetTracker\obj\Debug\net8.0\BudgetTracker.genruntimeconfig.cache
 C:\Users\Rovieeee\source\repos\BudgetTracker\obj\Debug\net8.0\ref\BudgetTracker.dll
+C:\Users\Rovieeee\source\repos\BudgetTracker\obj\Debug\net8.0\BudgetTracker.sourcelink.json
+C:\Users\Rovieeee\source\repos\BudgetTracker\obj\Debug\net8.0\scopedcss\Components\Pages\Home.razor.rz.scp.css
+C:\Users\Rovieeee\source\repos\BudgetTracker\obj\Debug\net8.0\scopedcss\Components\Pages\Intro.razor.rz.scp.css

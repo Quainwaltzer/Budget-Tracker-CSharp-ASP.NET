@@ -1,0 +1,127 @@
+﻿h3{
+    color: white;
+}
+
+.intro-container{
+    background: linear-gradient(to bottom, #151515, #8e00ff, #4b0082) !important;
+    height: fit-content;
+}
+
+.container-money {
+    position: relative; /* so absolute children position relative to this */
+    height: auto; /* no forced height */
+    width: 100%;
+
+}
+
+.about {
+    height: 200vh;
+    width: 100%;
+}
+
+.container-money h1 {
+    width: 100%;
+    font-weight: 900;
+    font-family: "League Spartan", sans-serif;
+    font-size: clamp(5rem, 10vw, 7rem);
+    text-align: center;
+    margin-top: 3%;
+    background: linear-gradient(to right, #a000ff, red);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+.stationary{
+    position: absolute;
+    height: 250vh;
+    width: 100%;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.parallax{
+    position: relative;
+    height: 250vh;
+}
+
+.stationary img {
+    position: absolute;
+    width: 15%;
+    height: auto;
+    user-select: none;
+    transition: transform 0.3s ease;
+    z-index: 200;
+    filter: drop-shadow(5px 5px 5px rgba(255,255,255,0.7));
+}
+
+.parallax img {
+    position: absolute;
+    width: 10%;
+    height: auto;
+    user-select: none;
+    transition: transform 0.3s ease;
+    z-index: -1;
+    filter: blur(3px);
+}
+
+.money-1 {
+    top: 10%;
+    left: -5%;
+    transform: rotate(25deg);
+}
+
+.money-2 {
+    top: 40%;
+    left: 3%;
+    transform: rotate(-15deg);
+}
+
+.money-3 {
+    top: 70%;
+    left: 5%;
+    transform: rotate(10deg);
+}
+
+.money-4 {
+    top: 85%;
+    right: -10%;
+    transform: rotate(-30deg);
+}
+
+.money-5 {
+    top: 50%;
+    right: -5%;
+    transform: rotate(20deg);
+}
+
+
+.money2-1 {
+    top: 10%;
+    left: 20%;
+    transform: rotate(25deg);
+}
+
+.money2-2 {
+    top: 10%;
+    right: 10%;
+    transform: rotate(-15deg);
+}
+
+.money2-3 {
+    top: 70%;
+    left: 40%;
+    transform: rotate(10deg);
+}
+
+.money2-4 {
+    top: 85%;
+    left: 70%;
+    transform: rotate(-30deg);
+}
+
+.money2-5 {
+    top: 50%;
+    left: 80%;
+    transform: rotate(20deg);
+}

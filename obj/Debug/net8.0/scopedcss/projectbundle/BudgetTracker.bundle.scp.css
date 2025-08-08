@@ -17,3 +17,217 @@
         right: 0.75rem;
         top: 0.5rem;
     }
+/* _content/BudgetTracker/Components/Pages/Home.razor.rz.scp.css */
+.inputs[b-kdgeq29nbo]{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    font-family: "Montserrat", sans-serif;
+}
+
+.title-top[b-kdgeq29nbo]{
+    width: 100%;
+    padding: 0 7.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Outfit", sans-serif;
+    color: #fffff0;
+    margin-bottom: 100px;
+}
+
+.title-top h5[b-kdgeq29nbo] {
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1rem, 1.3vw, 2rem);
+}
+
+.title-top h1[b-kdgeq29nbo] {
+    font-weight: 700;
+    font-size: clamp(3rem, 2.5vw, 3.5rem);
+    background: linear-gradient(to right, #ff3e00, #930000);
+    background-size: 400px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.title-top h3[b-kdgeq29nbo] {
+    font-weight: 300;
+    font-size: clamp(1.2rem, 1.7vw, 2.2rem);
+}
+
+.data-container[b-kdgeq29nbo]{
+    width: 100%;
+}
+
+table[b-kdgeq29nbo]{
+    color: white;
+    border: 1px solid white;
+    width: 100%;
+}
+
+td[b-kdgeq29nbo]{
+    text-align: center;
+}
+
+.sidebar[b-kdgeq29nbo]{
+    width: 15%;
+    background: lightgrey;
+    height: 100vh;
+    position: fixed;
+    transition: width 0.5s ease;
+}
+
+.sidebar.collapsed[b-kdgeq29nbo]{
+    width: 5%;
+}
+
+nav ul li[b-kdgeq29nbo]{
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    opacity: 0;
+}
+
+
+
+.main-container[b-kdgeq29nbo] {
+    margin-left: 15%;
+    width: 85%;
+    transition: width 0.5s ease, margin-left 0.5s ease;
+}
+
+.main-container.collapsed[b-kdgeq29nbo]{
+    margin-left: 5%;
+    width: 95%;
+}
+/* _content/BudgetTracker/Components/Pages/Intro.razor.rz.scp.css */
+h3[b-skfnkhgaa4]{
+    color: white;
+}
+
+.intro-container[b-skfnkhgaa4]{
+    background: linear-gradient(to bottom, #151515, #8e00ff, #4b0082) !important;
+    height: fit-content;
+}
+
+.container-money[b-skfnkhgaa4] {
+    position: relative; /* so absolute children position relative to this */
+    height: auto; /* no forced height */
+    width: 100%;
+
+}
+
+.about[b-skfnkhgaa4] {
+    height: 200vh;
+    width: 100%;
+}
+
+.container-money h1[b-skfnkhgaa4] {
+    width: 100%;
+    font-weight: 900;
+    font-family: "League Spartan", sans-serif;
+    font-size: clamp(5rem, 10vw, 7rem);
+    text-align: center;
+    margin-top: 3%;
+    background: linear-gradient(to right, #a000ff, red);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+.stationary[b-skfnkhgaa4]{
+    position: absolute;
+    height: 250vh;
+    width: 100%;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.parallax[b-skfnkhgaa4]{
+    position: relative;
+    height: 250vh;
+}
+
+.stationary img[b-skfnkhgaa4] {
+    position: absolute;
+    width: 15%;
+    height: auto;
+    user-select: none;
+    transition: transform 0.3s ease;
+    z-index: 200;
+    filter: drop-shadow(5px 5px 5px rgba(255,255,255,0.7));
+}
+
+.parallax img[b-skfnkhgaa4] {
+    position: absolute;
+    width: 10%;
+    height: auto;
+    user-select: none;
+    transition: transform 0.3s ease;
+    z-index: -1;
+    filter: blur(3px);
+}
+
+.money-1[b-skfnkhgaa4] {
+    top: 10%;
+    left: -5%;
+    transform: rotate(25deg);
+}
+
+.money-2[b-skfnkhgaa4] {
+    top: 40%;
+    left: 3%;
+    transform: rotate(-15deg);
+}
+
+.money-3[b-skfnkhgaa4] {
+    top: 70%;
+    left: 5%;
+    transform: rotate(10deg);
+}
+
+.money-4[b-skfnkhgaa4] {
+    top: 85%;
+    right: -10%;
+    transform: rotate(-30deg);
+}
+
+.money-5[b-skfnkhgaa4] {
+    top: 50%;
+    right: -5%;
+    transform: rotate(20deg);
+}
+
+
+.money2-1[b-skfnkhgaa4] {
+    top: 10%;
+    left: 20%;
+    transform: rotate(25deg);
+}
+
+.money2-2[b-skfnkhgaa4] {
+    top: 10%;
+    right: 10%;
+    transform: rotate(-15deg);
+}
+
+.money2-3[b-skfnkhgaa4] {
+    top: 70%;
+    left: 40%;
+    transform: rotate(10deg);
+}
+
+.money2-4[b-skfnkhgaa4] {
+    top: 85%;
+    left: 70%;
+    transform: rotate(-30deg);
+}
+
+.money2-5[b-skfnkhgaa4] {
+    top: 50%;
+    left: 80%;
+    transform: rotate(20deg);
+}

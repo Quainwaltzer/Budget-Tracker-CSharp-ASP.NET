@@ -1,1 +1,4 @@
 wwwroot\app.css
+wwwroot\js\app.js
+wwwroot\img\List-Background.png
+wwwroot\img\money.png

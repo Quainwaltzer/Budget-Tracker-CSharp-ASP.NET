@@ -1,0 +1,41 @@
+﻿@page "/"
+
+<main class="intro-container">
+    <section class="container-money">
+        <h1>MONEYMASTER</h1>
+        <div class="stationary">
+            <img src="/img/money.png" class="money-1" />
+            <img src="/img/money.png" class="money-2" />
+            <img src="/img/money.png" class="money-3" />
+            <img src="/img/money.png" class="money-4" />
+            <img src="/img/money.png" class="money-5" />
+
+        </div>
+        <div class="parallax">
+            <img src="/img/money.png" class="money2-1" />
+            <img src="/img/money.png" class="money2-2" />
+            <img src="/img/money.png" class="money2-3" />
+            <img src="/img/money.png" class="money2-4" />
+            <img src="/img/money.png" class="money2-5" />
+        </div>
+    </section>
+
+    <section class="about">
+        <h1>this project is blabla</h1>
+    </section>
+</main>
+
+
+
+
+@code {
+    [Inject] protected IJSRuntime js { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await js.InvokeVoidAsync("introAnimations.runAll");
+        }
+    }
+}
