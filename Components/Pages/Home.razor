@@ -1,0 +1,108 @@
+﻿@page "/"
+@using Microsoft.EntityFrameworkCore
+
+<PageTitle>Home</PageTitle>
+
+<div>
+    <label for="itemInput">Item</label>
+    <input type="text" @bind-value="ItemVar" name="itemInput" >
+    <label for="categoryInput">Category</label>
+    <input type="text" @bind-value="CategoryVar" name="categoryInput">
+    <label for="countInput">Count</label>
+    <input type="number" @bind-value="CountVar" name="countInput" step="1">
+    <label for="priceInput">Price</label>
+    <input type="number" @bind-value="PriceVar" name="priceInput" step="1" >
+    <button @onclick="Delete">Delete</button>
+    <button @onclick="Send">Send</button>
+<table>
+    <tr>
+        <th>Item Name</th>
+        <th>Category</th>
+        <th>Count</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var inputs in outputs)
+    {
+        <tr>
+            
+            <td><p>@inputs.ItemName</p></td>
+            <td><p>@inputs.Category</p></td>
+            <td><p>@inputs.Count</p></td>
+            <td><p>@inputs.Price</p></td>
+            <td><button @onclick="() => DeleteCertain(inputs.Id)">@inputs.ItemName Delete</button></td>
+            
+        </tr>
+     }
+</table>
+    
+</div>
+
+@code{
+    protected string ItemVar = string.Empty;
+    protected string CategoryVar = string.Empty;
+    protected int GoalVar = 0;
+    protected int CountVar = 0;
+    protected int PriceVar = 0;
+
+    [Inject] public BudgetContext _context { get; set; }
+    protected List<BudgetDatabase> outputs { get; set; } = new List<BudgetDatabase>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            outputs = await _context.Budgets.ToListAsync();
+            StateHasChanged();
+        }
+
+    }
+    public async Task HandleKeyEvent(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await Task.Delay(100);
+            await Send();
+        }
+    }
+
+    public async Task Send()
+    {
+        var inputs = new BudgetDatabase
+            {
+                ItemName = ItemVar,
+                Category = CategoryVar,
+                Count = CountVar,
+                Price = PriceVar
+            };
+        _context.Budgets.Add(inputs);
+        await _context.SaveChangesAsync();
+
+        UpdateUI();
+    }
+
+    public async Task Delete()
+    {
+        var sessionInputs = await _context.Budgets.ToListAsync();
+        _context.Budgets.RemoveRange(sessionInputs);
+        await _context.SaveChangesAsync();
+
+        UpdateUI();
+    }
+    public async Task DeleteCertain(int? id)
+    {
+        var message = await _context.Budgets.
+        Where(m => m.Id == id).ToListAsync();
+        _context.Budgets.RemoveRange(message);
+        await _context.SaveChangesAsync();
+
+        UpdateUI();
+    }
+
+
+    public async Task UpdateUI()
+    {
+        outputs = await _context.Budgets.ToListAsync();
+        StateHasChanged();
+    }
+}
