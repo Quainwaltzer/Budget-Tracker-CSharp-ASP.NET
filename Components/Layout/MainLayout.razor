@@ -1,5 +1,29 @@
 ﻿@inherits LayoutComponentBase
 
+@if(!IsHome)
+{
+<header>
+    <nav>
+        <ul>
+            <li>MoneyMaster</li>
+            <li>
+                <div class="main-nav-buttons">
+                    <button>Home</button>
+                    <button>About</button>
+                    <button>Contacts</button>
+                </div>
+            </li>
+            <li>
+                <div class="forms">
+                    <button>Log In</button>
+                    <button>Sign Up</button>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
+}
+
 @Body
 
 <div id="blazor-error-ui">
@@ -7,3 +31,17 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+@code{
+    [Inject] protected IJSRuntime js { get; set; }
+    private bool IsHome => Navigation.Uri.EndsWith("/Home", StringComparison.OrdinalIgnoreCase);
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await js.InvokeVoidAsync("headerAnimation.runAll");
+            await js.InvokeVoidAsync("headerAnimation.rerender");
+        }
+    }
+
+}

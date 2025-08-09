@@ -2,16 +2,16 @@ h3[b-skfnkhgaa4]{
     color: white;
 }
 
-.intro-container[b-skfnkhgaa4]{
+.intro-container[b-skfnkhgaa4] {
     background: linear-gradient(to bottom, #151515, #8e00ff, #4b0082) !important;
     height: fit-content;
+    padding: 50px 0px;
 }
 
 .container-money[b-skfnkhgaa4] {
     position: relative; /* so absolute children position relative to this */
-    height: auto; /* no forced height */
+    height: fit-content; /* no forced height */
     width: 100%;
-
 }
 
 .about[b-skfnkhgaa4] {
@@ -19,30 +19,44 @@ h3[b-skfnkhgaa4]{
     width: 100%;
 }
 
-.container-money h1[b-skfnkhgaa4] {
+.intro-container h1[b-skfnkhgaa4] {
     width: 100%;
     font-weight: 900;
     font-family: "League Spartan", sans-serif;
     font-size: clamp(5rem, 10vw, 7rem);
     text-align: center;
-    margin-top: 3%;
-    background: linear-gradient(to right, #a000ff, red);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    
+
+}
+
+.taglines[b-skfnkhgaa4]{
+    color: #fffff0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "League Spartan", sans-serif;
+    position: absolute; 
+    width: 100%;
+    height: 100vh; 
+    z-index: 1001;
+}
+
+.taglines h5[b-skfnkhgaa4]{
+    font-style: italic;
+    font-weight: 400;
 }
 .stationary[b-skfnkhgaa4]{
     position: absolute;
-    height: 250vh;
+    height: 100%;
     width: 100%;
-    z-index: 1000;
-    overflow: hidden;
+    z-index: 1002;
+    overflow-x: clip;
 }
 
 .parallax[b-skfnkhgaa4]{
     position: relative;
-    height: 250vh;
+    height: 100vh;
 }
 
 .stationary img[b-skfnkhgaa4] {
@@ -78,7 +92,7 @@ h3[b-skfnkhgaa4]{
 }
 
 .money-3[b-skfnkhgaa4] {
-    top: 70%;
+    bottom: 0%;
     left: 5%;
     transform: rotate(10deg);
 }

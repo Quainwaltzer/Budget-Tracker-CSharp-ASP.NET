@@ -11,13 +11,65 @@
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss[b-p6ts4hb4tf] {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss[b-p6ts4hb4tf] {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+
+/* Layout CSS */
+header[b-p6ts4hb4tf] {
+    position: fixed;   
+    width: 100%;
+    z-index: 2000;
+    padding: 15px;
+    opacity: 0;
+}
+
+nav[b-p6ts4hb4tf] {
+    background: rgba(0,0,0,1);
+    backdrop-filter: blur(5px);
+    padding: 10px;
+    color: #fffff0;
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 20px;
+}
+
+ul[b-p6ts4hb4tf]{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li[b-p6ts4hb4tf]{
+    list-style: none;
+}
+
+ul li:first-child[b-p6ts4hb4tf]{
+    font-family: "Outfit", sans-serif;  
+    font-weight: bold;
+}
+
+li div[b-p6ts4hb4tf]{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+li button[b-p6ts4hb4tf]{
+    background: transparent;
+    border: none;
+    outline: none; 
+    color: white;
+}
 /* _content/BudgetTracker/Components/Pages/Home.razor.rz.scp.css */
+.home-container[b-kdgeq29nbo]{
+    opacity: 0;
+}
+
 .inputs[b-kdgeq29nbo]{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -108,16 +160,16 @@ h3[b-skfnkhgaa4]{
     color: white;
 }
 
-.intro-container[b-skfnkhgaa4]{
+.intro-container[b-skfnkhgaa4] {
     background: linear-gradient(to bottom, #151515, #8e00ff, #4b0082) !important;
     height: fit-content;
+    padding: 50px 0px;
 }
 
 .container-money[b-skfnkhgaa4] {
     position: relative; /* so absolute children position relative to this */
-    height: auto; /* no forced height */
+    height: fit-content; /* no forced height */
     width: 100%;
-
 }
 
 .about[b-skfnkhgaa4] {
@@ -125,30 +177,44 @@ h3[b-skfnkhgaa4]{
     width: 100%;
 }
 
-.container-money h1[b-skfnkhgaa4] {
+.intro-container h1[b-skfnkhgaa4] {
     width: 100%;
     font-weight: 900;
     font-family: "League Spartan", sans-serif;
     font-size: clamp(5rem, 10vw, 7rem);
     text-align: center;
-    margin-top: 3%;
-    background: linear-gradient(to right, #a000ff, red);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    
+
+}
+
+.taglines[b-skfnkhgaa4]{
+    color: #fffff0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "League Spartan", sans-serif;
+    position: absolute; 
+    width: 100%;
+    height: 100vh; 
+    z-index: 1001;
+}
+
+.taglines h5[b-skfnkhgaa4]{
+    font-style: italic;
+    font-weight: 400;
 }
 .stationary[b-skfnkhgaa4]{
     position: absolute;
-    height: 250vh;
+    height: 100%;
     width: 100%;
-    z-index: 1000;
-    overflow: hidden;
+    z-index: 1002;
+    overflow-x: clip;
 }
 
 .parallax[b-skfnkhgaa4]{
     position: relative;
-    height: 250vh;
+    height: 100vh;
 }
 
 .stationary img[b-skfnkhgaa4] {
@@ -184,7 +250,7 @@ h3[b-skfnkhgaa4]{
 }
 
 .money-3[b-skfnkhgaa4] {
-    top: 70%;
+    bottom: 0%;
     left: 5%;
     transform: rotate(10deg);
 }

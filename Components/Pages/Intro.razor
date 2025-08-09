@@ -1,8 +1,14 @@
 ﻿@page "/"
 
 <main class="intro-container">
-    <section class="container-money">
+    <div class="taglines">
+        <h5>Your money, finally making sense.</h5>
+        <h3>Introducing</h3>
         <h1>MONEYMASTER</h1>
+        <p>Track it. Grow it. Enjoy it — without the boring finance jargon.</p>
+    </div>
+    <section class="container-money">
+        
         <div class="stationary">
             <img src="/img/money.png" class="money-1" />
             <img src="/img/money.png" class="money-2" />
@@ -22,6 +28,7 @@
 
     <section class="about">
         <h1>this project is blabla</h1>
+        <button @onclick="GoToHome">Home</button>
     </section>
 </main>
 
@@ -37,5 +44,13 @@
         {
             await js.InvokeVoidAsync("introAnimations.runAll");
         }
+    }
+
+    protected async Task GoToHome()
+    {
+        await js.InvokeVoidAsync("headerAnimation.hideHeader");
+        await js.InvokeVoidAsync("headerAnimation.hideMain");
+        await Task.Delay(500);
+        Navigation.NavigateTo("/Home");
     }
 }

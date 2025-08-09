@@ -1,3 +1,7 @@
+.home-container[b-kdgeq29nbo]{
+    opacity: 0;
+}
+
 .inputs[b-kdgeq29nbo]{
     display: grid;
     grid-template-columns: repeat(2, 1fr);

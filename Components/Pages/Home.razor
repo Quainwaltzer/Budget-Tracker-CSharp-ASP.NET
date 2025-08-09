@@ -2,68 +2,71 @@
 
 
 <PageTitle>Home</PageTitle>
-<nav class="sidebar @(isCollapsed ? "collapsed" : "")">
-    <button @onclick="toggleSidebar">Toggle Sidebar</button>
+<div class="home-container">
+    <nav class="sidebar @(isCollapsed ? "collapsed" : "")">
+        <button @onclick="toggleSidebar">Toggle Sidebar</button>
 
-    <ul>
-        <li> Add</li>
-        <li>See</li>
-        <li>Contact</li>
-    </ul>
-</nav>
+        <ul>
+            <li> Add</li>
+            <li>See</li>
+            <li>Contact</li>
+        </ul>
+    </nav>
 
-<main class="main-container @(isCollapsed ? "collapsed" : "")">
+    <main class="main-container @(isCollapsed ? "collapsed" : "")">
 
-    <header class="title-top">
-        <h3>Welcome to</h3>
-        <h1>MoneyMaster</h1>
-        <h5>Where budgeting meets simplicity, all at your hands.</h5>
-    </header>
+        <header class="title-top">
+            <h3>Welcome to</h3>
+            <h1>MoneyMaster</h1>
+            <h5>Where budgeting meets simplicity, all at your hands.</h5>
+        </header>
 
-    <section class="inputs-container">
-        <div class="inputs">
-            <label for="itemInput">Item</label>
-            <input type="text" @bind-value="ItemVar" name="itemInput">
+        <section class="inputs-container">
+            <div class="inputs">
+                <label for="itemInput">Item</label>
+                <input type="text" @bind-value="ItemVar" name="itemInput">
 
-            <label for="categoryInput">Category</label>
-            <input type="text" @bind-value="CategoryVar" name="categoryInput">
+                <label for="categoryInput">Category</label>
+                <input type="text" @bind-value="CategoryVar" name="categoryInput">
 
-            <label for="countInput">Count</label>
-            <input type="number" @bind-value="CountVar" name="countInput" step="1">
+                <label for="countInput">Count</label>
+                <input type="number" @bind-value="CountVar" name="countInput" step="1">
 
-            <label for="priceInput">Price</label>
-            <input type="number" @bind-value="PriceVar" name="priceInput" step="1">
-        </div>
+                <label for="priceInput">Price</label>
+                <input type="number" @bind-value="PriceVar" name="priceInput" step="1">
+            </div>
 
-        <button @onclick="Delete">Delete</button>
-        <button @onclick="Send">Send</button>
-    </section>
+            <button @onclick="Delete">Delete</button>
+            <button @onclick="Send">Send</button>
+        </section>
 
-    <section class="data-container">
-        <table>
-            <tr>
-                <th>Item Name</th>
-                <th>Category</th>
-                <th>Count</th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
-            @foreach (var inputs in outputs)
-            {
+        <section class="data-container">
+            <table>
                 <tr>
-
-                    <td><p>@inputs.ItemName</p></td>
-                    <td><p>@inputs.Category</p></td>
-                    <td><p>@inputs.Count</p></td>
-                    <td><p>@inputs.Price</p></td>
-                    <td><button @onclick="() => DeleteCertain(inputs.Id)">@inputs.ItemName Delete</button></td>
-
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Count</th>
+                    <th>Price</th>
+                    <th>Action</th>
                 </tr>
-            }
-        </table>
-    </section>
+                @foreach (var inputs in outputs)
+                {
+                    <tr>
 
-</main>
+                        <td><p>@inputs.ItemName</p></td>
+                        <td><p>@inputs.Category</p></td>
+                        <td><p>@inputs.Count</p></td>
+                        <td><p>@inputs.Price</p></td>
+                        <td><button @onclick="() => DeleteCertain(inputs.Id)">@inputs.ItemName Delete</button></td>
+
+                    </tr>
+                }
+            </table>
+        </section>
+
+    </main>
+</div>
+
 
 
 
@@ -84,6 +87,7 @@
         if (firstRender)
         {
             await js.InvokeVoidAsync("myAnimations.runAll");
+            await js.InvokeVoidAsync("setupBeforeUnload");
             outputs = await _context.Budgets.ToListAsync();
             StateHasChanged();
         }
