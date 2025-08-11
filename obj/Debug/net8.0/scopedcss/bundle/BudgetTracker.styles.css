@@ -19,6 +19,15 @@
 }
 
 
+*[b-p6ts4hb4tf],
+*[b-p6ts4hb4tf]::before,
+*[b-p6ts4hb4tf]::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
 /* Layout CSS */
 header[b-p6ts4hb4tf] {
     position: fixed;   
@@ -66,8 +75,17 @@ li button[b-p6ts4hb4tf]{
     color: white;
 }
 /* _content/BudgetTracker/Components/Pages/Home.razor.rz.scp.css */
-.home-container[b-kdgeq29nbo]{
+.home-container[b-kdgeq29nbo] {
     opacity: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.for-padding[b-kdgeq29nbo]{
+    position: relative;
+    padding: 2% 2% 2% 2%;
+    display:flex;
+    height: 100%;
 }
 
 .inputs[b-kdgeq29nbo]{
@@ -119,41 +137,148 @@ table[b-kdgeq29nbo]{
     color: white;
     border: 1px solid white;
     width: 100%;
+    padding: 10px;
 }
 
 td[b-kdgeq29nbo]{
     text-align: center;
 }
 
-.sidebar[b-kdgeq29nbo]{
-    width: 15%;
-    background: lightgrey;
-    height: 100vh;
-    position: fixed;
+.sidebar[b-kdgeq29nbo] {
+    display: flex;
+    box-sizing: border-box;
+    border-radius: 20px 0 0 20px;
+    overflow: hidden;
     transition: width 0.5s ease;
 }
 
-.sidebar.collapsed[b-kdgeq29nbo]{
-    width: 5%;
+.side-list button[b-kdgeq29nbo]{
+    height: fit-content;
+    text-wrap: nowrap;
+    width: 50%;
+    height: auto;
+    aspect-ratio: 1/1;
 }
 
-nav ul li[b-kdgeq29nbo]{
+.side-list li:first-child[b-kdgeq29nbo]{
+    background: none;
+}
+
+.button-container[b-kdgeq29nbo]{
+    position: absolute;
+}
+
+ul[b-kdgeq29nbo]{
+    width: 100%;
+}
+ul li[b-kdgeq29nbo]{
     text-align: center;
+    list-style: none;
     font-family: "Montserrat", sans-serif;
+    width: 100%;
     opacity: 0;
+    margin-bottom: 10px;
+    transition: background 0.5s ease;
 }
 
+ul li:hover[b-kdgeq29nbo]{
+    background: #151515;
+    color: white;
+    cursor: pointer;
+}
 
+.main-list[b-kdgeq29nbo] {
+    padding: 20px 10px;
+    overflow: hidden;
+    box-shadow: 0 0 4px 3px rgba(0,0,0,0.5);
+    transition: width 0.5s ease, padding 0.5s ease, box-shadow 0.5s ease;
+    white-space: nowrap;
+    background: #8456f1; /* just to see it */
+    width: 14%;
+    margin-right: 1%;
+}
+
+    .main-list.collapsed[b-kdgeq29nbo] {
+        box-shadow: 4px 0 4px 1px rgba(0,0,0,0);
+        padding: 20px 0;
+        width: 0; /* visually hides without affecting side-list width */
+    }
+
+.side-list[b-kdgeq29nbo] {
+    padding: 20px 10px;
+    background: #8456f1;
+    border-radius: 20px 0 0 20px;
+    width: 6%;
+    box-shadow: 0 0 4px 3px rgba(0,0,0,0.5);
+    transition: border-radius 0.5s ease;
+}
+
+.side-list.collapsed[b-kdgeq29nbo] {
+    transition-delay: 0.5s;
+    border-radius: 20px;
+}
 
 .main-container[b-kdgeq29nbo] {
-    margin-left: 15%;
-    width: 85%;
-    transition: width 0.5s ease, margin-left 0.5s ease;
+    background: #151515;
+    box-shadow: 0 0 4px 3px rgba(0,0,0,0.5);
+    overflow: hidden;
+    height: 100%;
+    width: 80%;
+    transition: width 0.5s ease, border-radius 0.5s ease;
+    border-radius: 0 20px 20px 0;
 }
 
-.main-container.collapsed[b-kdgeq29nbo]{
-    margin-left: 5%;
-    width: 95%;
+.main-container.collapsed[b-kdgeq29nbo] {
+    border-radius: 20px;
+    width: 100%;
+}
+
+.add-budget[b-kdgeq29nbo] {
+    height: 100%;
+    background-color: #28282b;
+    padding: 20px;
+}
+
+.section-headers[b-kdgeq29nbo]{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 20px;
+}
+
+.section-headers h1[b-kdgeq29nbo]{
+    font-family: "Outfit", sans-serif;
+    font-size: 35px;
+}
+
+.line[b-kdgeq29nbo]{
+    width: 100%;
+    background: orange;
+    height: 8px;
+}
+.see-data[b-kdgeq29nbo] {
+    height: 100%;
+    background: blue;
+    color: white;
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.see-navigations[b-kdgeq29nbo]{
+    position: fixed;
+    bottom: 0;
+}
+.testing[b-kdgeq29nbo] {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.data-container[b-kdgeq29nbo] {
+    width: 100%;
+    flex-shrink: 0; /* prevent shrinking */
+    /* width can be auto or fixed */
 }
 /* _content/BudgetTracker/Components/Pages/Intro.razor.rz.scp.css */
 h3[b-skfnkhgaa4]{
@@ -161,7 +286,7 @@ h3[b-skfnkhgaa4]{
 }
 
 .intro-container[b-skfnkhgaa4] {
-    background: linear-gradient(to bottom, #151515, #8e00ff, #4b0082) !important;
+    background: linear-gradient(to bottom, #151515, #8e00ff, #4b0082, #8e00ff, #151515) !important;
     height: fit-content;
     padding: 50px 0px;
 }
@@ -183,7 +308,7 @@ h3[b-skfnkhgaa4]{
     font-family: "League Spartan", sans-serif;
     font-size: clamp(5rem, 10vw, 7rem);
     text-align: center;
-    
+    margin-top: 1%;
 
 }
 
@@ -198,11 +323,37 @@ h3[b-skfnkhgaa4]{
     width: 100%;
     height: 100vh; 
     z-index: 1001;
+    pointer-events: none;
+}
+
+.taglines button[b-skfnkhgaa4]{
+    background: linear-gradient(to bottom right, #8e00ff, #4b0082);
+    padding: 10px 30px;
+    border: none;
+    outline: none;
+    color: #fffff0;
+    margin-top: 20px;
+    border-radius: 20px 0 20px 0;
+    width: fit-content;
+    box-shadow: 0 0 10px 4px white;
+    transition: transform 0.5s ease;
+    pointer-events:auto;
+}
+
+.taglines button:hover[b-skfnkhgaa4]{
+    transform: scale(1.03);
 }
 
 .taglines h5[b-skfnkhgaa4]{
     font-style: italic;
     font-weight: 400;
+    font-size: clamp(0.75rem, 2vw, 1.2rem);
+    margin-bottom: 2%;
+}
+
+.taglines h3[b-skfnkhgaa4]{
+    font-size: clamp(1rem, 2.2vw, 1.5rem);
+
 }
 .stationary[b-skfnkhgaa4]{
     position: absolute;
@@ -210,11 +361,13 @@ h3[b-skfnkhgaa4]{
     width: 100%;
     z-index: 1002;
     overflow-x: clip;
+   pointer-events: none;
 }
 
 .parallax[b-skfnkhgaa4]{
     position: relative;
     height: 100vh;
+    pointer-events: none;
 }
 
 .stationary img[b-skfnkhgaa4] {

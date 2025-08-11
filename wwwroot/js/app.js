@@ -11,7 +11,7 @@
     window.myAnimations = {
         runAll: () => {
 
-            animate(".sidebar li", {
+            animate("li", {
                 duration: 1000,
                 translateX: [-100, 0],
                 delay: stagger(500),
@@ -25,6 +25,51 @@
                 opacity: [0,1],
                 ease: 'inOutQuad',
             });
+
+            animateSectionHeaders({
+                header: '.add-header',
+                lines: '.add-header .line',
+                targets: '.add-budget'
+            });
+
+            animateSectionHeaders({
+                header: '.charts-header',
+                lines: '.charts-header .line',
+                targets: '.see-data'
+            });
+
+            function animateSectionHeaders({ header, lines, targets}) {
+                animate(header, {
+                    translateY: [20, 0],
+                    opacity: [0, 1],
+                    duration: 1000,
+                    ease: 'outQuad',
+                    autoplay: onScroll({
+                        target: targets,
+                        container: '.main-container',
+                        enter: 'center center-=50',
+                        leave: 'center center+=50',
+                        sync: 'play reset play reset',
+                        debug: false
+                    })
+                });
+
+                animate(lines, {
+                    width: ['0%', '100%'],
+                    duration: 1500,
+                    delay: 1000,
+                    ease: 'outQuad',
+                    autoplay: onScroll({
+                        target: targets,
+                        container: '.main-container',
+                        enter: 'center center-=50',
+                        leave: 'center center+=50',
+                        sync: 'play reset play reset',
+                        debug: false
+                    })
+                });
+            }
+            
         }
     };
 
@@ -149,6 +194,50 @@
 
             location.reload();
         });
+    };
+
+    window.lockScroll = () => {
+        window.addEventListener('load', () => {
+            const firstSection = document.querySelector('.add-budget');
+            if (firstSection) {
+                firstSection.scrollIntoView({ behavior: 'smooth' }); 
+            }
+        });
+
+        window.addEventListener('wheel', (e) => {
+            e.preventDefault(); 
+        }, { passive: false });
+    };
+
+    window.See = () => {
+        console.log("I was here");
+            const see = document.querySelector('.see-data');
+            if (see) {
+                see.scrollIntoView({ behavior: 'smooth' });
+            }
+    };
+
+    window.Add = () => {
+        console.log("I was here");
+
+            const add = document.querySelector('.add-budget');
+        if (add) {
+            add.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    window.Testing = () => {
+
+        const testing = document.querySelector('.testing');
+        testing.scrollIntoView({ behavior: 'smooth' });
+
+    };
+
+    window.Data = () => {
+
+        const data = document.querySelector('.data-container');
+        data.scrollIntoView({ behavior: 'smooth' });
+
     };
 })();
 

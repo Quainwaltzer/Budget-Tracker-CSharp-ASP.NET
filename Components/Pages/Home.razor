@@ -3,68 +3,110 @@
 
 <PageTitle>Home</PageTitle>
 <div class="home-container">
-    <nav class="sidebar @(isCollapsed ? "collapsed" : "")">
-        <button @onclick="toggleSidebar">Toggle Sidebar</button>
 
-        <ul>
-            <li> Add</li>
-            <li>See</li>
-            <li>Contact</li>
-        </ul>
-    </nav>
+    <div class="for-padding">
+                
 
-    <main class="main-container @(isCollapsed ? "collapsed" : "")">
+            
+            <ul class="side-list @(isCollapsed ? "collapsed" : "")">
+            <li><button @onclick="toggleSidebar">Toggle</button></li>
+                <li>Y</li>
+                <li>Z</li>
+            </ul>
 
-        <header class="title-top">
-            <h3>Welcome to</h3>
-            <h1>MoneyMaster</h1>
-            <h5>Where budgeting meets simplicity, all at your hands.</h5>
-        </header>
+            <ul class="main-list @(isCollapsed ? "collapsed" : "")">
+                <li @onclick="() => ScrollToAdd()">Add</li>
+                <li @onclick="ScrollToSee">See</li>
+                <li>Contact</li>
+            </ul>
 
-        <section class="inputs-container">
-            <div class="inputs">
-                <label for="itemInput">Item</label>
-                <input type="text" @bind-value="ItemVar" name="itemInput">
+        <main class="main-container @(isCollapsed ? "collapsed" : "")">
 
-                <label for="categoryInput">Category</label>
-                <input type="text" @bind-value="CategoryVar" name="categoryInput">
+            <section class="add-budget">
+                <div class="add-header section-headers">
+                    <h1>ADD</h1>
+                    <div class="line"></div>
+                </div>
 
-                <label for="countInput">Count</label>
-                <input type="number" @bind-value="CountVar" name="countInput" step="1">
+                <section class="inputs-container">
+                    <div class="inputs">
+                        <label for="itemInput">Item</label>
+                        <input type="text" @bind-value="ItemVar" name="itemInput">
 
-                <label for="priceInput">Price</label>
-                <input type="number" @bind-value="PriceVar" name="priceInput" step="1">
-            </div>
+                        <label for="categoryInput">Category</label>
+                        <input type="text" @bind-value="CategoryVar" name="categoryInput">
 
-            <button @onclick="Delete">Delete</button>
-            <button @onclick="Send">Send</button>
-        </section>
+                        <label for="countInput">Count</label>
+                        <input type="number" @bind-value="CountVar" name="countInput" step="1">
 
-        <section class="data-container">
-            <table>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Category</th>
-                    <th>Count</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                </tr>
-                @foreach (var inputs in outputs)
-                {
-                    <tr>
+                        <label for="priceInput">Price</label>
+                        <input type="number" @bind-value="PriceVar" name="priceInput" step="1">
+                    </div>
 
-                        <td><p>@inputs.ItemName</p></td>
-                        <td><p>@inputs.Category</p></td>
-                        <td><p>@inputs.Count</p></td>
-                        <td><p>@inputs.Price</p></td>
-                        <td><button @onclick="() => DeleteCertain(inputs.Id)">@inputs.ItemName Delete</button></td>
+                    <button @onclick="Delete">Delete</button>
+                    <button @onclick="Send">Send</button>
+                </section>
 
-                    </tr>
-                }
-            </table>
-        </section>
+                
 
-    </main>
+            </section>
+
+            <section class="see-data">
+                
+                <div class="see-navigations">
+                    <button @onclick="goToTesting">TestingGo</button>
+                    <button @onclick="goToData">DataGo</button>
+                </div>
+                
+                <section class="testing">
+                    
+                    <div style="padding: 20px;">
+                        <div class="charts-header section-headers">
+                            <h1>CHARTS</h1>
+                            <div class="line"></div>
+                        </div>
+                        Hello
+                    </div>
+                 </section>
+
+                <section class="data-container">
+                   
+                    <div style="padding: 20px;">
+                        <div class="table-header section-headers">
+                            <h1>TABLE</h1>
+                            <div class="line"></div>
+                        </div>
+                        
+                        <table>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Count</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                            @foreach (var inputs in outputs)
+                            {
+                                <tr>
+
+                                    <td><p>@inputs.ItemName</p></td>
+                                    <td><p>@inputs.Category</p></td>
+                                    <td><p>@inputs.Count</p></td>
+                                    <td><p>@inputs.Price</p></td>
+                                    <td><button @onclick="() => DeleteCertain(inputs.Id)">@inputs.ItemName Delete</button></td>
+
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    
+                </section>
+
+            </section>
+
+        </main>
+    </div>
+    
 </div>
 
 
@@ -88,6 +130,7 @@
         {
             await js.InvokeVoidAsync("myAnimations.runAll");
             await js.InvokeVoidAsync("setupBeforeUnload");
+            await js.InvokeVoidAsync("lockScroll");
             outputs = await _context.Budgets.ToListAsync();
             StateHasChanged();
         }
@@ -131,6 +174,7 @@
 
         UpdateUI();
     }
+
     public async Task DeleteCertain(int? id)
     {
         var message = await _context.Budgets.
@@ -140,6 +184,15 @@
 
         UpdateUI();
     }
+
+    public async Task ScrollToAdd() => await js.InvokeVoidAsync("Add");
+
+
+    public async Task ScrollToSee() => await js.InvokeVoidAsync("See");
+
+    public async Task goToTesting() => await js.InvokeVoidAsync("Testing");
+
+    public async Task goToData() => await js.InvokeVoidAsync("Data");
 
 
     public async Task UpdateUI()

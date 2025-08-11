@@ -1,5 +1,14 @@
-﻿.home-container{
+﻿.home-container {
     opacity: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.for-padding{
+    position: relative;
+    padding: 2% 2% 2% 2%;
+    display:flex;
+    height: 100%;
 }
 
 .inputs{
@@ -51,39 +60,146 @@ table{
     color: white;
     border: 1px solid white;
     width: 100%;
+    padding: 10px;
 }
 
 td{
     text-align: center;
 }
 
-.sidebar{
-    width: 15%;
-    background: lightgrey;
-    height: 100vh;
-    position: fixed;
+.sidebar {
+    display: flex;
+    box-sizing: border-box;
+    border-radius: 20px 0 0 20px;
+    overflow: hidden;
     transition: width 0.5s ease;
 }
 
-.sidebar.collapsed{
-    width: 5%;
+.side-list button{
+    height: fit-content;
+    text-wrap: nowrap;
+    width: 50%;
+    height: auto;
+    aspect-ratio: 1/1;
 }
 
-nav ul li{
+.side-list li:first-child{
+    background: none;
+}
+
+.button-container{
+    position: absolute;
+}
+
+ul{
+    width: 100%;
+}
+ul li{
     text-align: center;
+    list-style: none;
     font-family: "Montserrat", sans-serif;
+    width: 100%;
     opacity: 0;
+    margin-bottom: 10px;
+    transition: background 0.5s ease;
 }
 
+ul li:hover{
+    background: #151515;
+    color: white;
+    cursor: pointer;
+}
 
+.main-list {
+    padding: 20px 10px;
+    overflow: hidden;
+    box-shadow: 0 0 4px 3px rgba(0,0,0,0.5);
+    transition: width 0.5s ease, padding 0.5s ease, box-shadow 0.5s ease;
+    white-space: nowrap;
+    background: #8456f1; /* just to see it */
+    width: 14%;
+    margin-right: 1%;
+}
+
+    .main-list.collapsed {
+        box-shadow: 4px 0 4px 1px rgba(0,0,0,0);
+        padding: 20px 0;
+        width: 0; /* visually hides without affecting side-list width */
+    }
+
+.side-list {
+    padding: 20px 10px;
+    background: #8456f1;
+    border-radius: 20px 0 0 20px;
+    width: 6%;
+    box-shadow: 0 0 4px 3px rgba(0,0,0,0.5);
+    transition: border-radius 0.5s ease;
+}
+
+.side-list.collapsed {
+    transition-delay: 0.5s;
+    border-radius: 20px;
+}
 
 .main-container {
-    margin-left: 15%;
-    width: 85%;
-    transition: width 0.5s ease, margin-left 0.5s ease;
+    background: #151515;
+    box-shadow: 0 0 4px 3px rgba(0,0,0,0.5);
+    overflow: hidden;
+    height: 100%;
+    width: 80%;
+    transition: width 0.5s ease, border-radius 0.5s ease;
+    border-radius: 0 20px 20px 0;
 }
 
-.main-container.collapsed{
-    margin-left: 5%;
-    width: 95%;
+.main-container.collapsed {
+    border-radius: 20px;
+    width: 100%;
+}
+
+.add-budget {
+    height: 100%;
+    background-color: #28282b;
+    padding: 20px;
+}
+
+.section-headers{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 20px;
+}
+
+.section-headers h1{
+    font-family: "Outfit", sans-serif;
+    font-size: 35px;
+}
+
+.line{
+    width: 100%;
+    background: orange;
+    height: 8px;
+}
+.see-data {
+    height: 100%;
+    background: blue;
+    color: white;
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.see-navigations{
+    position: fixed;
+    bottom: 0;
+}
+.testing {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.data-container {
+    width: 100%;
+    flex-shrink: 0; /* prevent shrinking */
+    /* width can be auto or fixed */
 }

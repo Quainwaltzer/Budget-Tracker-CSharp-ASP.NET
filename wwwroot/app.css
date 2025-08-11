@@ -30,14 +30,16 @@ h1:focus {
 
 *,
 *::before,
-*::after{
+*::after {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
-html, body{
-    background: #151515;
+html, body {
+    background: #28282b;
+    
 }
 
 p, h1, label{

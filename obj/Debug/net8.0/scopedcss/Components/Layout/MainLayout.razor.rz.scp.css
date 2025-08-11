@@ -18,6 +18,15 @@
 }
 
 
+*[b-p6ts4hb4tf],
+*[b-p6ts4hb4tf]::before,
+*[b-p6ts4hb4tf]::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
 /* Layout CSS */
 header[b-p6ts4hb4tf] {
     position: fixed;   
