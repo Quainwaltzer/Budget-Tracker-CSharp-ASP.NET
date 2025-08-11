@@ -9,7 +9,15 @@
 
             
             <ul class="side-list @(isCollapsed ? "collapsed" : "")">
-            <li><button @onclick="toggleSidebar">Toggle</button></li>
+            <li>
+                <div class="open-sidebar " @onclick="toggleSidebar">
+                    <ul class="hamburger @(isCollapsed ? "collapsed" : "")">
+                        <li class="l1" style="height: 3px; background: white;"></li>
+                        <li class="l2" style="height: 3px; background: white;"></li>
+                        <li class="l3" style="height: 3px; background: white;"></li>
+                    </ul>
+                </div>
+            </li>
                 <li>Y</li>
                 <li>Z</li>
             </ul>

@@ -239,5 +239,6 @@
         data.scrollIntoView({ behavior: 'smooth' });
 
     };
+
 })();
 

@@ -144,12 +144,18 @@ td[b-kdgeq29nbo]{
     text-align: center;
 }
 
-.sidebar[b-kdgeq29nbo] {
-    display: flex;
-    box-sizing: border-box;
-    border-radius: 20px 0 0 20px;
-    overflow: hidden;
-    transition: width 0.5s ease;
+.hamburger[b-kdgeq29nbo] {
+    padding: 10px;
+    transform: rotate(-90deg);
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.hamburger.collapsed[b-kdgeq29nbo] {
+    transform: rotate(0deg);
+}
+
+.hamburger li[b-kdgeq29nbo]{
+    margin-bottom: 5px;
 }
 
 .side-list button[b-kdgeq29nbo]{
