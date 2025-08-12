@@ -57,11 +57,12 @@
 
     protected async Task GoToHome()
     {
+        
         await js.InvokeVoidAsync("headerAnimation.hideHeader");
         await js.InvokeVoidAsync("headerAnimation.hideMain");
         await js.InvokeVoidAsync("lockScroll");
         await Task.Delay(500);
-        StateHasChanged();
         Navigation.NavigateTo("/Home");
+
     }
 }

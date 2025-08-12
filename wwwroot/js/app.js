@@ -11,6 +11,14 @@
     window.myAnimations = {
         runAll: () => {
 
+            const home = document.querySelector('.home-container');
+            animate(home, {
+                duration: 1000,
+                opacity: [0, 1],
+                ease: 'inOutQuad',
+            });
+
+
             animate("li", {
                 duration: 1000,
                 translateX: [-100, 0],
@@ -19,13 +27,7 @@
                 opacity: [0, 1]
             });
 
-            const home = document.querySelector('.home-container');
-            animate(home, {
-                duration: 1000,
-                opacity: [0,1],
-                ease: 'inOutQuad',
-            });
-
+           
             animateSectionHeaders({
                 header: '.add-header',
                 lines: '.add-header .line',

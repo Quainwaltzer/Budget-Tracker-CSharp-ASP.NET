@@ -31,6 +31,7 @@
         <main class="main-container @(isCollapsed ? "collapsed" : "")">
 
             <section class="add-budget">
+
                 <div class="add-header section-headers">
                     <h1>ADD</h1>
                     <div class="line"></div>
@@ -39,23 +40,51 @@
                 <section class="inputs-container">
                     <div class="inputs">
                         <label for="itemInput">Item</label>
-                        <input type="text" @bind-value="ItemVar" name="itemInput">
+                        <input type="text" @bind-value="ItemVar" name="itemInput" />
+                        
+                        <label for="merchantInput">Merchant</label>
+                        <input type="text" @bind-value="MerchantVar" name="merchantInput">
 
                         <label for="categoryInput">Category</label>
                         <input type="text" @bind-value="CategoryVar" name="categoryInput">
+                        
+                        <label for="descriptionInput">Description</label>
+                        <textarea @bind="DescriptionVar" name="descriptionInput"></textarea>
 
                         <label for="countInput">Count</label>
-                        <input type="number" @bind-value="CountVar" name="countInput" step="1">
+                        <input type="number" @bind-value="CountVar" name="countInput" step="1" min="0">
 
                         <label for="priceInput">Price</label>
-                        <input type="number" @bind-value="PriceVar" name="priceInput" step="1">
+                        <input type="number" @bind-value="PriceVar" name="priceInput" step="1" min="0">
                     </div>
 
-                    <button @onclick="Delete">Delete</button>
-                    <button @onclick="Send">Send</button>
+                    <div class="file-upload">
+                        <label class="upload-btn">
+                            @if (string.IsNullOrEmpty(SelectedImageBase64))
+                            {
+                                <p style="font-size: 20px;">Choose Image</p>
+                                <p>Max Image Size: 5MB</p>
+                            }
+                            
+                            <InputFile OnChange="HandleSelectedFile" class="hidden-file" style="display: none;" />
+                            @if (!string.IsNullOrEmpty(SelectedImageBase64) && isImage)
+                            {
+                                <img src="@SelectedImageBase64" alt="Preview" />
+                            } else if (!string.IsNullOrEmpty(SelectedImageBase64) && !isImage) 
+                            {
+                                <p style="color: red;">Selected file is not an image!</p>
+                            }
+
+
+                        </label>
+                    </div>
                 </section>
 
-                
+
+                <div class="submit-forms">
+                    <button @onclick="Delete">Delete</button>
+                    <button @onclick="Send">Send</button>
+                </div>
 
             </section>
 
@@ -91,20 +120,42 @@
                                 <th>Category</th>
                                 <th>Count</th>
                                 <th>Price</th>
+                                <th>Image</th>
                                 <th>Action</th>
                             </tr>
-                            @foreach (var inputs in outputs)
+
+                            @if (isLoading)
                             {
                                 <tr>
-
-                                    <td><p>@inputs.ItemName</p></td>
-                                    <td><p>@inputs.Category</p></td>
-                                    <td><p>@inputs.Count</p></td>
-                                    <td><p>@inputs.Price</p></td>
-                                    <td><button @onclick="() => DeleteCertain(inputs.Id)">@inputs.ItemName Delete</button></td>
-
+                                    <td>Data are loading, please wait...</td>
                                 </tr>
+                            } else
+                            {
+                                foreach (var inputs in outputs)
+                                {
+                                    <tr>
+
+                                        <td><p>@inputs.ItemName</p></td>
+                                        <td><p>@inputs.Category</p></td>
+                                        <td><p>@inputs.Count</p></td>
+                                        <td><p>@inputs.Price</p></td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(inputs.InvoiceBase64))
+                                            {
+                                                <img src="data:@inputs.ContentType;base64,@inputs.InvoiceBase64" style="width: 50%; height: auto;" />
+                                            }
+                                            else
+                                            {
+                                                <p>Invoice image not available!</p>
+                                            }
+
+                                        </td>
+                                        <td><button @onclick="() => DeleteCertain(inputs.Id)">@inputs.ItemName Delete</button></td>
+
+                                    </tr>
+                                }
                             }
+                            
                         </table>
                     </div>
                     
@@ -122,11 +173,19 @@
 
 @code{
     protected string ItemVar = string.Empty;
+    protected string MerchantVar = string.Empty;
     protected string CategoryVar = string.Empty;
+    protected string DescriptionVar = string.Empty;
     protected int GoalVar = 0;
     protected int CountVar = 0;
     protected int PriceVar = 0;
     protected bool isCollapsed = false;
+    protected byte[] SelectedImageBytes { get; set; }
+    protected string? SelectedImageBase64 { get; set; }
+    protected bool isImage = false;
+    protected IBrowserFile? fileSave;
+    protected string? base64Save = string.Empty;
+    protected bool isLoading;
 
     [Inject] public IJSRuntime js { get; set; }
     [Inject] public BudgetContext _context { get; set; }
@@ -139,10 +198,16 @@
             await js.InvokeVoidAsync("myAnimations.runAll");
             await js.InvokeVoidAsync("setupBeforeUnload");
             await js.InvokeVoidAsync("lockScroll");
-            outputs = await _context.Budgets.ToListAsync();
-            StateHasChanged();
         }
 
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true;
+
+        outputs = await _context.Budgets.ToListAsync();
+        isLoading = false;
     }
 
     protected async Task toggleSidebar()
@@ -159,19 +224,47 @@
         }
     }
 
+    public async Task HandleSelectedFile(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        fileSave = file;
+        if (file != null && file.ContentType.StartsWith("image/",StringComparison.OrdinalIgnoreCase))
+        {
+            isImage = true;
+            using var stream = new MemoryStream();
+            await file.OpenReadStream(maxAllowedSize: 5_000_000).CopyToAsync(stream); // 5MB limit
+            SelectedImageBytes = stream.ToArray();
+
+            var base64 = Convert.ToBase64String(SelectedImageBytes);
+            base64Save = base64;
+            SelectedImageBase64 = $"data:{file.ContentType};base64,{base64}";
+        } else
+        {
+            isImage = false;
+            SelectedImageBase64 = null;
+        }
+    }
+
     public async Task Send()
     {
         var inputs = new BudgetDatabase
             {
                 ItemName = ItemVar,
+                Merchant = MerchantVar,
                 Category = CategoryVar,
+                Description = DescriptionVar,
                 Count = CountVar,
-                Price = PriceVar
+                Price = PriceVar,
+                InvoiceBase64 = base64Save,
+                ContentType = fileSave?.ContentType ?? string.Empty
             };
         _context.Budgets.Add(inputs);
         await _context.SaveChangesAsync();
 
-        UpdateUI();
+        base64Save = string.Empty;
+        fileSave = null;
+
+       await UpdateUI();
     }
 
     public async Task Delete()
