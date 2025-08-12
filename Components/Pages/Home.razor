@@ -5,9 +5,7 @@
 <div class="home-container">
 
     <div class="for-padding">
-                
 
-            
             <ul class="side-list @(isCollapsed ? "collapsed" : "")">
             <li>
                 <div class="open-sidebar " @onclick="toggleSidebar">
@@ -97,12 +95,12 @@
                 
                 <section class="testing">
                     
-                    <div style="padding: 20px;">
+                    <div id="chart-container" style="padding: 20px;">
                         <div class="charts-header section-headers">
                             <h1>CHARTS</h1>
                             <div class="line"></div>
                         </div>
-                        Hello
+                       
                     </div>
                  </section>
 
@@ -190,7 +188,8 @@
     [Inject] public IJSRuntime js { get; set; }
     [Inject] public BudgetContext _context { get; set; }
     protected List<BudgetDatabase> outputs { get; set; } = new List<BudgetDatabase>();
-
+    protected List<string> Items { get; set; }
+    protected List<int> Amounting { get; set; }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -198,6 +197,11 @@
             await js.InvokeVoidAsync("myAnimations.runAll");
             await js.InvokeVoidAsync("setupBeforeUnload");
             await js.InvokeVoidAsync("lockScroll");
+            
+            if (Items?.Any() == true && Amounting?.Any() == true)
+            {
+                await js.InvokeVoidAsync("loadHighchartsItem", Items, Amounting);
+            }
         }
 
     }
@@ -205,8 +209,16 @@
     protected override async Task OnInitializedAsync()
     {
         isLoading = true;
-
         outputs = await _context.Budgets.ToListAsync();
+
+
+        Items = outputs.Select(x => x.ItemName).ToList();
+        Amounting = outputs.Select(x => x.Count * x.Price).ToList();
+
+        if(Items?.Any() == true && Amounting?.Any() == true)
+            {
+            await js.InvokeVoidAsync("loadHighchartsItem", Items, Amounting);
+        }
         isLoading = false;
     }
 
@@ -264,7 +276,7 @@
         base64Save = string.Empty;
         fileSave = null;
 
-       await UpdateUI();
+        await UpdateUI();
     }
 
     public async Task Delete()

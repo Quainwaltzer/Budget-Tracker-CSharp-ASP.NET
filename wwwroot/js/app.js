@@ -242,5 +242,19 @@
 
     };
 
+    window.loadHighchartsItem = (items, amounting) => {
+        console.log('testing');
+        Highcharts.chart('chart-container', {
+            chart: { type: 'line' },
+            xAxis: { categories: items },
+            title: { text: 'Testing lang' },
+            series: [{
+                name: 'Amounts for the specific item',
+                data: amounting
+            }]
+
+        });
+    }
+
 })();
 

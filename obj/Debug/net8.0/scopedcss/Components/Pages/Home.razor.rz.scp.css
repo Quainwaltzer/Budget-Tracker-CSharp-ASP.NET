@@ -15,14 +15,41 @@
     display: flex;
     width: 100%;
     height: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .inputs[b-kdgeq29nbo]{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 0.25fr 0.75fr;
+    grid-template-rows: repeat(4, -1fr);
     font-family: "Montserrat", sans-serif;
+    width: 50%;
+}
+
+.inputs input[b-kdgeq29nbo], textarea[b-kdgeq29nbo]{
+    background: none;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 4px -2px rgba(0,0,0,0.5),
+                inset -2px -2px 4px -2px rgba(255,255,255,0.5);  
+    width: 100%;
+    height: 40px;
+    color: white;
+    padding: 10px;
+    font-family: "Outfit", sans-serif;
+    transition: border 1s ease;
+}
+
+.inputs input:focus[b-kdgeq29nbo], textarea:focus[b-kdgeq29nbo]{
+    outline: none;
+    border: 1px solid red;
+}
+
+input[type="number"][b-kdgeq29nbo]::-webkit-inner-spin-button,
+input[type="number"][b-kdgeq29nbo]::-webkit-outer-spin-button {
+    background: red; 
+    border-radius: 4px;
 }
 
 .title-top[b-kdgeq29nbo]{
@@ -180,7 +207,7 @@ ul li:hover[b-kdgeq29nbo]{
 }
 
 .file-upload[b-kdgeq29nbo]{
-    width: 50%;
+    width: 35%;
     font-family: "Montserrat", sans-serif;
 }
 
@@ -205,17 +232,45 @@ ul li:hover[b-kdgeq29nbo]{
     box-shadow: 0 0 4px 2px rgba(0,0,0,0.5);
 }
 
-input[b-kdgeq29nbo]{
-    height: 30px;
-    width: 100%;
-}
-
 textarea[b-kdgeq29nbo]{
     resize: none;
+    height: 200px !important;
+    width: 100%;
 }
 .submit-forms[b-kdgeq29nbo]{
     margin-top: auto;
+    width: 100%;
+    text-align: center;
+    height: auto;
+    padding: 20px 0;
 }
+
+.submit-forms button[b-kdgeq29nbo]{
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+    font-family: "League Spartan", sans-serif;
+    font-weight: bold;
+    width: 200px;
+    margin: 0 20px;
+    box-shadow: 0 0 4px 2px rgba(0,0,0,0.5);
+    transition: transform 0.5s ease;
+}
+
+.submit-forms button:hover[b-kdgeq29nbo]{
+    transform: scale(1.03);
+}
+
+.submit-forms button:first-child[b-kdgeq29nbo] {
+    background: #aa0000;
+    border: none;
+}
+
+.submit-forms button:nth-child(2)[b-kdgeq29nbo]{
+    background: #4d7eff;
+    border: none;
+}
+
 .section-headers[b-kdgeq29nbo]{
     display: flex;
     width: 100%;
