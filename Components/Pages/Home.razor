@@ -38,22 +38,22 @@
                 <section class="inputs-container">
                     <div class="inputs">
                         <label for="itemInput">Item</label>
-                        <input type="text" @bind-value="ItemVar" name="itemInput" />
+                        <input type="text" @bind="ItemVar" name="itemInput"/>
                         
                         <label for="merchantInput">Merchant</label>
-                        <input type="text" @bind-value="MerchantVar" name="merchantInput">
+                        <input type="text" @bind="MerchantVar" name="merchantInput">
 
                         <label for="categoryInput">Category</label>
-                        <input type="text" @bind-value="CategoryVar" name="categoryInput">
+                        <input type="text" @bind="CategoryVar" name="categoryInput">
                         
                         <label for="descriptionInput">Description</label>
                         <textarea @bind="DescriptionVar" name="descriptionInput"></textarea>
 
                         <label for="countInput">Count</label>
-                        <input type="number" @bind-value="CountVar" name="countInput" step="1" min="0">
+                        <input type="number" @bind="CountVar" name="countInput" step="1" min="0">
 
                         <label for="priceInput">Price</label>
-                        <input type="number" @bind-value="PriceVar" name="priceInput" step="1" min="0">
+                        <input type="number" @bind="PriceVar" name="priceInput" step="1" min="0">
                     </div>
 
                     <div class="file-upload">
@@ -88,76 +88,90 @@
 
             <section class="see-data">
                 
-                <div class="see-navigations">
-                    <button @onclick="goToTesting">TestingGo</button>
-                    <button @onclick="goToData">DataGo</button>
-                </div>
-                
-                <section class="testing">
-                    
-                    <div id="chart-container" style="padding: 20px;">
-                        <div class="charts-header section-headers">
-                            <h1>CHARTS</h1>
-                            <div class="line"></div>
-                        </div>
-                       
-                    </div>
-                 </section>
+                <div class="scroll-visuals" style="display: @(seeDataDisplay ? "flex" : "none")">
 
-                <section class="data-container">
-                   
-                    <div style="padding: 20px;">
-                        <div class="table-header section-headers">
-                            <h1>TABLE</h1>
-                            <div class="line"></div>
-                        </div>
-                        
-                        <table>
-                            <tr>
-                                <th>Item Name</th>
-                                <th>Category</th>
-                                <th>Count</th>
-                                <th>Price</th>
-                                <th>Image</th>
-                                <th>Action</th>
-                            </tr>
+                    <section class="testing">
 
-                            @if (isLoading)
-                            {
+                        <div class="graph-container" style="padding: 20px;">
+                            <div class="charts-header section-headers">
+                                <h1>CHARTS</h1>
+                                <div class="line"></div>
+                            </div>
+
+                            <div class="main-charts-container">
+                                <div id="pie-container"></div>
+                                <div id="bar-container"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="data-container">
+
+                        <div style="padding: 20px;">
+                            <div class="table-header section-headers">
+                                <h1>TABLE</h1>
+                                <div class="line"></div>
+                            </div>
+
+                            <table>
                                 <tr>
-                                    <td>Data are loading, please wait...</td>
+                                    <th>Item Name</th>
+                                    <th>Category</th>
+                                    <th>Count</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
                                 </tr>
-                            } else
-                            {
-                                foreach (var inputs in outputs)
+
+                                @if (isLoading)
                                 {
                                     <tr>
-
-                                        <td><p>@inputs.ItemName</p></td>
-                                        <td><p>@inputs.Category</p></td>
-                                        <td><p>@inputs.Count</p></td>
-                                        <td><p>@inputs.Price</p></td>
-                                        <td>
-                                            @if (!string.IsNullOrEmpty(inputs.InvoiceBase64))
-                                            {
-                                                <img src="data:@inputs.ContentType;base64,@inputs.InvoiceBase64" style="width: 50%; height: auto;" />
-                                            }
-                                            else
-                                            {
-                                                <p>Invoice image not available!</p>
-                                            }
-
-                                        </td>
-                                        <td><button @onclick="() => DeleteCertain(inputs.Id)">@inputs.ItemName Delete</button></td>
-
+                                        <td>Data are loading, please wait...</td>
                                     </tr>
                                 }
-                            }
-                            
-                        </table>
-                    </div>
-                    
-                </section>
+                                else
+                                {
+                                    foreach (var inputs in outputs)
+                                    {
+                                        <tr>
+
+                                            <td><p>@inputs.ItemName</p></td>
+                                            <td><p>@inputs.Category</p></td>
+                                            <td><p>@inputs.Count</p></td>
+                                            <td><p>@inputs.Price</p></td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(inputs.ContentType))
+                                                {
+                                                    <img src="/images/@inputs.Id" style="width: 50%; height: auto;" />
+                                                }
+                                                else
+                                                {
+                                                    <p>Invoice image not available!</p>
+                                                }
+
+                                            </td>
+                                            <td>
+                                                <button @onclick="() => DeleteCertain(inputs.Id)">@inputs.ItemName Delete</button>
+                                                <button @onclick="() => MoreCertain(inputs.Merchant)">@inputs.Merchant More</button>
+                                                
+                                            </td>
+
+                                        </tr>
+                                    }
+                                }
+
+                            </table>
+                        </div>
+
+                    </section>
+
+                </div>
+                <div id="more-chart" style="display: @(!seeDataDisplay ? "block" : "none"); height: 100%;"></div>
+
+                <div class="see-navigations">
+                    <button @onclick="goToTesting"><i class="fas fa-chart-bar"></i></button>
+                    <button @onclick="goToData"><i class="fas fa-table"></i></button>
+                </div>
 
             </section>
 
@@ -184,42 +198,56 @@
     protected IBrowserFile? fileSave;
     protected string? base64Save = string.Empty;
     protected bool isLoading;
+    protected bool _chartLoaded = false;
+    protected bool seeDataDisplay = true;
 
     [Inject] public IJSRuntime js { get; set; }
     [Inject] public BudgetContext _context { get; set; }
     protected List<BudgetDatabase> outputs { get; set; } = new List<BudgetDatabase>();
-    protected List<string> Items { get; set; }
-    protected List<int> Amounting { get; set; }
+    protected List<string> Items { get; set; } = new();
+    protected List<double> Amounting { get; set; } = new();
+    protected List<int> Count { get; set; } = new();
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             await js.InvokeVoidAsync("myAnimations.runAll");
             await js.InvokeVoidAsync("setupBeforeUnload");
-            await js.InvokeVoidAsync("lockScroll");
-            
-            if (Items?.Any() == true && Amounting?.Any() == true)
-            {
-                await js.InvokeVoidAsync("loadHighchartsItem", Items, Amounting);
-            }
         }
 
+        if (!_chartLoaded && Items.Any() && Amounting.Any())
+        {
+            await js.InvokeVoidAsync("loadHighchartsItem", Items, Amounting, Count);
+            _chartLoaded = true; // so we don't call it repeatedly
+        }
     }
 
     protected override async Task OnInitializedAsync()
     {
         isLoading = true;
-        outputs = await _context.Budgets.ToListAsync();
+        var budgets = await _context.Budgets
+                        .AsNoTracking()
+                        .Select(b => new BudgetDatabase
+                        {
+                            Id = b.Id,
+                            ItemName = b.ItemName,
+                            Category = b.Category,
+                            Count = b.Count,
+                            Price = b.Price,
+                            ContentType = b.ContentType,
+                            Merchant = b.Merchant
+                        })
+                        .ToListAsync();
+        outputs = budgets;
 
+        Items = budgets.Select(x => x.ItemName).ToList();
+        Amounting = budgets.Select(x => (double)(x.Count * x.Price)).ToList();
+        Count = budgets.Select(x => x.Count).ToList();
 
-        Items = outputs.Select(x => x.ItemName).ToList();
-        Amounting = outputs.Select(x => x.Count * x.Price).ToList();
-
-        if(Items?.Any() == true && Amounting?.Any() == true)
-            {
-            await js.InvokeVoidAsync("loadHighchartsItem", Items, Amounting);
-        }
         isLoading = false;
+
+        StateHasChanged();
     }
 
     protected async Task toggleSidebar()
@@ -248,7 +276,6 @@
             SelectedImageBytes = stream.ToArray();
 
             var base64 = Convert.ToBase64String(SelectedImageBytes);
-            base64Save = base64;
             SelectedImageBase64 = $"data:{file.ContentType};base64,{base64}";
         } else
         {
@@ -267,14 +294,21 @@
                 Description = DescriptionVar,
                 Count = CountVar,
                 Price = PriceVar,
-                InvoiceBase64 = base64Save,
+                ImageByte = SelectedImageBytes,
                 ContentType = fileSave?.ContentType ?? string.Empty
             };
         _context.Budgets.Add(inputs);
         await _context.SaveChangesAsync();
-
-        base64Save = string.Empty;
         fileSave = null;
+
+        SelectedImageBase64 = null;
+
+        ItemVar = string.Empty;
+        MerchantVar = string.Empty;
+        CategoryVar = string.Empty;
+        DescriptionVar = string.Empty;
+        CountVar = 0;
+        PriceVar = 0;
 
         await UpdateUI();
     }
@@ -285,32 +319,47 @@
         _context.Budgets.RemoveRange(sessionInputs);
         await _context.SaveChangesAsync();
 
-        UpdateUI();
+        await UpdateUI();
     }
 
     public async Task DeleteCertain(int? id)
     {
         var message = await _context.Budgets.
         Where(m => m.Id == id).ToListAsync();
+
         _context.Budgets.RemoveRange(message);
         await _context.SaveChangesAsync();
 
-        UpdateUI();
+        await UpdateUI();
     }
 
     public async Task ScrollToAdd() => await js.InvokeVoidAsync("Add");
 
 
-    public async Task ScrollToSee() => await js.InvokeVoidAsync("See");
+    public async Task ScrollToSee() { await js.InvokeVoidAsync("loadHighchartsItem", Items, Amounting, Count); await js.InvokeVoidAsync("See"); }
 
     public async Task goToTesting() => await js.InvokeVoidAsync("Testing");
 
     public async Task goToData() => await js.InvokeVoidAsync("Data");
 
+    public async Task MoreCertain(string merchant)
+    {
+        seeDataDisplay = false;
 
+        // Filter the budgets for the given merchant
+        var filteredBudgets = outputs.Where(x => x.Merchant == merchant).ToList();
+
+
+        // Prepare JS arrays
+        var itemNames = filteredBudgets.Select(x => x.ItemName ?? "Unknown").ToList();
+        var amounts = filteredBudgets.Select(x => (double)(x.Count * x.Price)).ToList();
+
+        await js.InvokeVoidAsync("loadChartForCertainMerchant", itemNames, amounts, merchant);
+    }
     public async Task UpdateUI()
     {
         outputs = await _context.Budgets.ToListAsync();
+        await js.InvokeVoidAsync("loadHighchartsItem", Items, Amounting, Count);
         StateHasChanged();
     }
 }

@@ -25,7 +25,20 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
+app.MapGet("/images/{id:int}", async (int id, BudgetContext db) =>
+{
+    var imageData = await db.Budgets
+        .Where(b => b.Id == id)
+        .Select(b => new { b.ImageByte, b.ContentType })
+        .FirstOrDefaultAsync();
+
+    if (imageData == null || imageData.ImageByte == null)
+        return Results.NotFound();
+
+    return Results.File(imageData.ImageByte, imageData.ContentType);
+});
+
+
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-
 app.Run();

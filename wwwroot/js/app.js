@@ -8,6 +8,7 @@
         text
     } = anime;
 
+
     window.myAnimations = {
         runAll: () => {
 
@@ -37,7 +38,7 @@
             animateSectionHeaders({
                 header: '.charts-header',
                 lines: '.charts-header .line',
-                targets: '.see-data'
+                targets: '.scroll-visuals'
             });
 
             function animateSectionHeaders({ header, lines, targets}) {
@@ -108,11 +109,19 @@
 
             const testing = text.split('.intro-container h1', { chars: { wrap: false } });
             const heya = testing.chars;
+            const title = document.querySelector('.taglines h1');
             animate(heya, {
                 delay: stagger(200),
                 duration: 1500,
                 ease: 'outQuad',
-                y: [20, 0]
+                y: [20, 0],
+                onComplete: () => {
+                    animate(title,{
+                        rotateX: [5, 0], // example animation
+                        duration: 1000,
+                        ease: 'outBack'
+                    });
+                }
             });
         }
 
@@ -242,17 +251,123 @@
 
     };
 
-    window.loadHighchartsItem = (items, amounting) => {
+    window.loadHighchartsItem = (items, amounting, count) => {
         console.log('testing');
-        Highcharts.chart('chart-container', {
-            chart: { type: 'line' },
-            xAxis: { categories: items },
-            title: { text: 'Testing lang' },
+        console.log(amounting);
+
+        const chartData = items.map((item, i) => ({
+            name: item,
+            y: amounting[i]
+        }));
+
+        Highcharts.setOptions({
+            chart: {
+                style: {
+                    fontFamily: 'Montserrat, sans-serif',
+                    color: '#ffffff'
+                },
+                backgroundColor: 'transparent'
+            },
+            title: { style: { color: '#ffffff' } },
+            xAxis: { labels: { style: { color: '#ffffff' } }, lineColor: '#555' },
+            yAxis: { labels: { style: { color: '#ffffff' } }, lineColor: '#555', gridLineColor: '#333' },
+            legend: { itemStyle: { color: '#ffffff' } }
+        });
+
+        Highcharts.chart('pie-container', {
+            chart: {
+                type: 'pie',
+                animation: true,
+                backgroundColor: 'transparent',
+                color: 'white',
+                style: {
+                    fontFamily: 'Montserrat, sans-serif',
+                    color: '#fffff0'
+                },
+
+            },
+            title: {
+                text: 'Item and Amount Pie Graph',
+                style: {
+                    color: 'white'
+                }
+            },
             series: [{
                 name: 'Amounts for the specific item',
+                data: chartData,
+                animation: {
+                    duration: 1500,
+                    easing: 'easeOutBounce'
+                }
+            }],
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true, // show labels
+                        format: '{point.name}: {point.y} ({point.percentage:.1f}%)',
+                        color: '#fff', // text color
+                        style: {
+                            fontWeight: 'bold',
+                            fontFamily: 'Montserrat, sans-serif',
+                            fontSize: '14px'
+                        }
+                    }
+                }
+            },
+            credits: { enabled: false }
+        });
+
+        Highcharts.chart('bar-container', {
+            chart: {
+                type: 'bar',
+                backgroundColor: 'transparent'
+            },
+            title: {
+                text: 'Relation of Items and Count'
+            },
+            xAxis: {
+                categories: items // array of item names
+            },
+            yAxis: {
+                title: {
+                    text: 'Count'
+                }
+            },
+            series: [{
+                name: 'Count',
+                data: count // array of numbers corresponding to each item
+            },
+                {
+                    name: 'Price',
+                    data: amounting
+                }],
+            credits: { enabled: false }
+        });
+    }
+
+    window.loadChartForCertainMerchant = (merchanting, amounting, merchantName) => {
+        console.log("Merchant:", merchantName);
+        Highcharts.chart('more-chart', {
+
+            chart: {
+                type: 'bar',
+                backgroundColor: 'transparent'
+            },
+            title: {
+                text: merchantName
+            },
+            xAxis: {
+                categories: merchanting
+            },
+            yAxis: {
+                title: { text: 'Amount' }
+            },
+            series: [{
+                name: 'Amounts',
                 data: amounting
             }]
-
         });
     }
 
