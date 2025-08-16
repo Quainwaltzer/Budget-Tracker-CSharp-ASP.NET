@@ -41,6 +41,12 @@
                 targets: '.scroll-visuals'
             });
 
+            animateSectionHeaders({
+                header: '.table-header',
+                lines: '.table-header .line',
+                targets: '.scroll-visuals'
+            });
+
             function animateSectionHeaders({ header, lines, targets}) {
                 animate(header, {
                     translateY: [20, 0],
@@ -50,8 +56,8 @@
                     autoplay: onScroll({
                         target: targets,
                         container: '.main-container',
-                        enter: 'center center-=50',
-                        leave: 'center center+=50',
+                        enter: 'center top',
+                        leave: 'center bottom',
                         sync: 'play reset play reset',
                         debug: false
                     })
@@ -65,8 +71,8 @@
                     autoplay: onScroll({
                         target: targets,
                         container: '.main-container',
-                        enter: 'center center-=50',
-                        leave: 'center center+=50',
+                        enter: 'center top',
+                        leave: 'center bottom',
                         sync: 'play reset play reset',
                         debug: false
                     })

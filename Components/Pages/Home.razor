@@ -28,6 +28,10 @@
 
         <main class="main-container @(isCollapsed ? "collapsed" : "")">
 
+            <section class="home">
+
+            </section>
+
             <section class="add-budget">
 
                 <div class="add-header section-headers">
@@ -166,7 +170,11 @@
                     </section>
 
                 </div>
-                <div id="more-chart" style="display: @(!seeDataDisplay ? "block" : "none"); height: 100%;"></div>
+                
+                
+                <div id="more-chart" style="display: @(!seeDataDisplay ? "block" : "none") height: 100%;"></div>
+                
+                
 
                 <div class="see-navigations">
                     <button @onclick="goToTesting"><i class="fas fa-chart-bar"></i></button>
@@ -355,6 +363,11 @@
         var amounts = filteredBudgets.Select(x => (double)(x.Count * x.Price)).ToList();
 
         await js.InvokeVoidAsync("loadChartForCertainMerchant", itemNames, amounts, merchant);
+    }
+
+    public async Task RemoveMore()
+    {
+        seeDataDisplay = true;
     }
     public async Task UpdateUI()
     {

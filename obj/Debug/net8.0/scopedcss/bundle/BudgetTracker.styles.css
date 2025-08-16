@@ -292,8 +292,8 @@ ul li:hover[b-kdgeq29nbo]{
 }
 
 .upload-btn img[b-kdgeq29nbo]{
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -309,6 +309,7 @@ ul li:hover[b-kdgeq29nbo]{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    overflow: hidden;
     box-shadow: 0 0 4px 2px rgba(0,0,0,0.5);
 }
 
