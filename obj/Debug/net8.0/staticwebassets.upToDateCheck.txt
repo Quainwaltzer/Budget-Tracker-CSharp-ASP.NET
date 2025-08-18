@@ -1,5 +1,7 @@
 wwwroot\app.css
+wwwroot\js\anime.iife.js
 wwwroot\img\List-Background.png
 wwwroot\img\money.png
-wwwroot\js\anime.iife.js
 wwwroot\js\app.js
+wwwroot\js\progressbar.js
+wwwroot\img\Background-Budget.jpg

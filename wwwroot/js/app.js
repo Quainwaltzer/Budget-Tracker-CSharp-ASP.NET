@@ -12,6 +12,9 @@
     window.myAnimations = {
         runAll: () => {
 
+            document.querySelectorAll("input, textarea, select, button")
+                .forEach(el => el.tabIndex = -1);
+
             const home = document.querySelector('.home-container');
             animate(home, {
                 duration: 1000,
@@ -20,7 +23,7 @@
             });
 
 
-            animate("li", {
+            animate(".side-list li", {
                 duration: 1000,
                 translateX: [-100, 0],
                 delay: stagger(500),
@@ -28,7 +31,36 @@
                 opacity: [0, 1]
             });
 
-           
+            animate(".main-list li", {
+                duration: 1000,
+                translateX: [-100, 0],
+                delay: stagger(500),
+                ease: 'outQuad',
+                opacity: [0, 1]
+            });
+
+            animate(".balance-info li", {
+                duration: 1000,
+                translateY: [20, 0],
+                delay: stagger(500),
+                ease: 'outQuad',
+                opacity: [0, 1]
+            });
+
+            animate(".goal-info li", {
+                duration: 1000,
+                translateY: [20, 0],
+                delay: stagger(500, { start: 1500 }),
+                ease: 'outQuad',
+                opacity: [0, 1]
+            });
+
+            animateSectionHeaders({
+                header: '.home-header',
+                lines: '.home-header .line',
+                targets: '.home'
+            });
+
             animateSectionHeaders({
                 header: '.add-header',
                 lines: '.add-header .line',
@@ -234,6 +266,14 @@
             }
     };
 
+    window.Home = () => {
+        console.log("I was here");
+            const home = document.querySelector('.home');
+            if (home) {
+                home.scrollIntoView({ behavior: 'smooth' });
+            }
+    };
+
     window.Add = () => {
         console.log("I was here");
 
@@ -377,5 +417,23 @@
         });
     }
 
+    window.progressBar = () => {
+        var bar = new ProgressBar.Line('.progression', {
+            strokeWidth: 4,
+            easing: 'easeInOut',
+            duration: 1400,
+            color: '#FFEA82',
+            trailColor: '#eee',
+            trailWidth: 1,
+            svgStyle: { width: '100%', height: '100%' },
+            from: { color: '#FFEA82' },
+            to: { color: '#ED6A5A' },
+            step: (state, bar) => {
+                bar.path.setAttribute('stroke', state.color);
+            }
+        });
+
+        bar.animate(1.0); 
+    };
 })();
 

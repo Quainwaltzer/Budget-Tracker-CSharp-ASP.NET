@@ -9,11 +9,8 @@
             <ul class="side-list @(isCollapsed ? "collapsed" : "")">
             <li>
                 <div class="open-sidebar " @onclick="toggleSidebar">
-                    <ul class="hamburger @(isCollapsed ? "collapsed" : "")">
-                        <li class="l1" style="height: 3px; background: white;"></li>
-                        <li class="l2" style="height: 3px; background: white;"></li>
-                        <li class="l3" style="height: 3px; background: white;"></li>
-                    </ul>
+                    <button class="hamburger @(isCollapsed ? "collapsed" : "") fa fa-bars"></button>
+
                 </div>
             </li>
                 <li>Y</li>
@@ -21,6 +18,7 @@
             </ul>
 
             <ul class="main-list @(isCollapsed ? "collapsed" : "")">
+                <li @onclick="() => ScrollToHome()">Home</li>
                 <li @onclick="() => ScrollToAdd()">Add</li>
                 <li @onclick="ScrollToSee">See</li>
                 <li>Contact</li>
@@ -30,6 +28,34 @@
 
             <section class="home">
 
+                <div class="home-header section-headers">
+                    <h1>HOME</h1>
+                    <div class="line"></div>
+                </div>
+
+                <div class="home-subcontainer">
+                    <div class="balance-container">
+                        <ul class="balance-info">
+                            <li style="font-size: 12px;">Hello, Rovie!</li>
+                            <li style="font-size: 16px; font-weight: 500;">Your current balance is, </li>
+                            <li style="pointer-events: auto; cursor: default">
+                                <input type="text" readonly=@isRead style="@(isRead ? "background: none; color: white; pointer-events: none; cursor: crosshair;" : "background: #28282b; color: white; box-shadow: inset 0 0 4px 2px black;" )"/>
+                            </li>
+                        </ul>
+
+                        <button @onclick="ToggleRead">Toggle Readonly</button>
+                    </div>
+
+                    <div class="goal-container">
+                        <ul class="goal-info">
+                            <li style="font-size: 12px;">Hello, Rovie!</li>
+                            <li style="font-size: 16px; font-weight: 500;">Your current balance is, </li>
+                            <li style="font-size: 24px; font-weight: bold;">$20,000</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="progression"></div>
             </section>
 
             <section class="add-budget">
@@ -208,6 +234,7 @@
     protected bool isLoading;
     protected bool _chartLoaded = false;
     protected bool seeDataDisplay = true;
+    protected bool isRead = true;
 
     [Inject] public IJSRuntime js { get; set; }
     [Inject] public BudgetContext _context { get; set; }
@@ -222,6 +249,7 @@
         {
             await js.InvokeVoidAsync("myAnimations.runAll");
             await js.InvokeVoidAsync("setupBeforeUnload");
+            await js.InvokeVoidAsync("progressBar");
         }
 
         if (!_chartLoaded && Items.Any() && Amounting.Any())
@@ -261,6 +289,11 @@
     protected async Task toggleSidebar()
     {
         isCollapsed = !isCollapsed;
+    }
+
+    protected async Task ToggleRead()
+    {
+        isRead = !isRead;
     }
 
     public async Task HandleKeyEvent(KeyboardEventArgs e)
@@ -343,6 +376,7 @@
 
     public async Task ScrollToAdd() => await js.InvokeVoidAsync("Add");
 
+    public async Task ScrollToHome() => await js.InvokeVoidAsync("Home");
 
     public async Task ScrollToSee() { await js.InvokeVoidAsync("loadHighchartsItem", Items, Amounting, Count); await js.InvokeVoidAsync("See"); }
 
@@ -369,6 +403,7 @@
     {
         seeDataDisplay = true;
     }
+
     public async Task UpdateUI()
     {
         outputs = await _context.Budgets.ToListAsync();

@@ -107,8 +107,12 @@ td, th {
 }
 
 .hamburger {
-    padding: 10px;
     transform: rotate(-90deg);
+    color: white;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    height: 1000px;
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -146,12 +150,15 @@ ul li{
     width: 100%;
     opacity: 0;
     margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 5px 5px 5px 10px;
+    color: white;
+    text-align: left;
     transition: background 0.5s ease;
 }
 
 ul li:hover{
-    background: #151515;
-    color: white;
+    background: rgba(255,255,255,0.25);
     cursor: pointer;
 }
 
@@ -178,6 +185,7 @@ ul li:hover{
     border-radius: 20px 0 0 20px;
     width: 6%;
     box-shadow: 0 0 4px 3px rgba(0,0,0,0.5);
+    text-align: center;
     transition: border-radius 0.5s ease;
 }
 
@@ -199,6 +207,67 @@ ul li:hover{
 .main-container.collapsed {
     border-radius: 20px;
     width: 100%;
+}
+
+.home{
+    height: 100%;
+    width: 100%;
+    background: #28282b;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.home-subcontainer{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.balance-container, .goal-container {
+    flex: 0 1 50%;
+    color: white;
+    background: url('/img/Background-Budget.jpg') no-repeat center center;
+    background-size: 100% auto;
+    display: flex;
+    justify-content: left;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 4px 2px rgba(0,0,0,0.75);
+    overflow: hidden;
+}
+
+.balance-info, .goal-info {
+    width: fit-content;
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.balance-info li, .goal-info li{
+    text-align: start;
+    pointer-events: none;
+    cursor: crosshair;
+    margin: 0 !important;
+}
+
+.balance-info li:hover, .goal-info li:hover{
+    background: none !important;
+}
+
+.balance-info input{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    border: none;
+    border-radius: 20px; 
+    padding: 10px; 
+    transition: background 0.5s ease, box-shadow 0.5s ease;
+    width: 50%;
 }
 
 .add-budget {
